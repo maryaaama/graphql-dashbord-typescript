@@ -1,0 +1,20 @@
+.form2{
+    max-width: 40rem;
+   display: flex;
+   margin-left: 20rem;
+    background-color: aliceblue;
+    margin-top: 20rem;
+}
+.email{
+    margin-top: 2rem;  
+}
+.text{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+   
+  
+}
+.button1{
+   
+    margin-top: 1rem;
+}

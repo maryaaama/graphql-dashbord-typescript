@@ -1,0 +1,14 @@
+
+
+.contain{
+  
+    margin-top: 10rem;
+    display: flex;
+    justify-content:space-around;
+    text-align: center;
+    max-width: 50rem;
+  
+}
+.skills{
+    margin-bottom: auto;
+}
