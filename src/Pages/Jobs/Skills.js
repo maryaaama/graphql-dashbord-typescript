@@ -3,9 +3,10 @@ import { useQuery } from "@apollo/client";
 import React, {useEffect, useState, useCallback, useMemo } from 'react';
 import { Tag,Listbox,EmptySearchResult,Combobox,Text,AutoSelection,BlockStack} from '@shopify/polaris';
 import { SKILLS } from "../../Graphql/Queries";
-const Skills = ({ label, ...props }) => {
 
-    const { setFieldValue , setFieldError } = useFormikContext();
+
+const Skills = ({ label, ...props }) => {
+    const {setFieldValue , setFieldError} = useFormikContext();
     const [field, meta] = useField(props);
 
     const [selectedTags, setSelectedTags] = useState(['FrontEnd']);
@@ -18,7 +19,7 @@ const Skills = ({ label, ...props }) => {
       limit: 5,
     },
   });
-  const name=props.name
+  const name=props.name;
   const handleBlur = useCallback(() => {
     field.onBlur({ target: { name } });
   }, [field, name]);
@@ -32,10 +33,9 @@ const Skills = ({ label, ...props }) => {
     }
     return undefined;
   }, [meta.error, meta.touched]);
+
     const handleActiveOptionChange = useCallback(
-      
       (activeOption) => {
-       
         const activeOptionIsAction = activeOption === value;
        
         if (!activeOptionIsAction && !selectedTags.includes(activeOption)) {
@@ -50,15 +50,14 @@ const Skills = ({ label, ...props }) => {
     const handleSelectChange = useCallback(
       (value) => {
         setFieldValue(props.name, value);
+        console.log(value);
       },
       [props.name, setFieldValue]
     );
 
     const updateSelection = useCallback(
       (selected) => {
-      
         const nextSelectedTags = new Set([...selectedTags]);
-    
         if (nextSelectedTags.has(selected)) {
           nextSelectedTags.delete(selected);
         } else {
@@ -84,15 +83,9 @@ const Skills = ({ label, ...props }) => {
     );
 
     const getAllTags = useCallback(() => {
-      const savedTags = data?.skills || [];
-      
-      if (!Array.isArray(savedTags)) {
-        console.error("Skills data is not in the expected format:", savedTags);
-        return [];
-      }
-    
+      const savedTags = ['backend', 'sever', 'qraphql', 'polaris', 'javascript'];
       return [...new Set([...savedTags, ...selectedTags].sort())];
-    }, [data?.skills, selectedTags]);
+    }, [selectedTags]);
     
     /*const getAllTags = useCallback(() => {
       console.log('getAllTags')
@@ -106,7 +99,6 @@ const Skills = ({ label, ...props }) => {
       (option) => {
         const trimValue = value.trim().toLocaleLowerCase();
         const matchIndex = option.toLocaleLowerCase().indexOf(trimValue);
-        console.log('formatOptionText')
         if (!value || matchIndex === -1) return option;
   
         const start = option.slice(0, matchIndex);
@@ -128,6 +120,7 @@ const Skills = ({ label, ...props }) => {
     const options = useMemo(() => {
       let list;
       const allTags = getAllTags();
+     
       const filterRegex = new RegExp(value, 'i');
       if (value) {
         list = allTags.filter((tag) => tag.match(filterRegex));
@@ -149,9 +142,10 @@ const Skills = ({ label, ...props }) => {
       </BlockStack>
     ) : null;
 
-   /* const optionMarkup =
+   const optionMarkup =
     options.length > 0
       ? options.map((option) => {
+       
           return (
             <Listbox.Option
               key={option}
@@ -165,9 +159,9 @@ const Skills = ({ label, ...props }) => {
             </Listbox.Option>
           );
         })
-      : null;*/
+      : null;
 
-      const optionMarkup = data
+      /* const optionMarkup = data
       ? data.skills.skills.map((option) => {
           const { title, id } = option;
           return (
@@ -181,12 +175,12 @@ const Skills = ({ label, ...props }) => {
             </Listbox.Option>
           );
         })
-      : null;
+      : null;*/
   
 
 
       const noResults = value && !getAllTags().includes(value);
-
+      
       const actionMarkup = noResults ? (
     <Listbox.Action value={value}>{`Add "${value}"`}</Listbox.Action>
   ) : null;

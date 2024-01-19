@@ -11,14 +11,15 @@ import { CREATE_JOB } from "../../Graphql/Mutations";
 
 
 const OPTIONS = [
+  { label: "Select", value: "select" },
   { label: "tehran", value: "tehran" },
   { label: "ahvaz", value: "ahvaz" },
-  { label: "shiraz", value: 'shiraz' },
-  { label: "esfahan", value: 'esfahan' },
-  { label: "mashhad", value: 'mashhad' },
-  { label: "tabriz", value: 'tabriz' },
-  { label: "zanjan", value: 'zanjan' },
-  { label: "boshehr", value: 'boshehr' },
+  { label: "shiraz", value: "shiraz" },
+  { label: "esfahan", value: "esfahan" },
+  { label: "mashhad", value: "mashhad" },
+  { label: "tabriz", value: "tabriz" },
+  { label: "zanjan", value: "zanjan" },
+  { label: "boshehr", value: "boshehr" },
 ];
 
 
@@ -40,9 +41,10 @@ const initialValues= {
  export default function NewJob() {
 
   const [createJob, { error }] = useMutation(CREATE_JOB);
+  
   const navigate = useNavigate();
-  const handleSubmit =  useCallback(
-    
+
+  /*const handleSubmit =  useCallback( 
     async (values) => {
       console.log(values);
       try {
@@ -57,12 +59,37 @@ const initialValues= {
         if (data.createJob.status) {
          console.log('yas');
         }
-      } catch {
-        console.log(error);
+      } catch (error) {
+        console.error(error);
       }
     },
     [createJob, error],
+  );*/
+  const handleSubmit = useCallback(
+    async (values) => {
+      console.log(values);
+      try {
+        const { data } = await createJob({
+          variables: {
+            title: values.title,
+            description: values.description,
+            city: values.city,
+            skills: values.skills,
+          },
+        });
+  
+        if (data.createJob.status === "success") {
+          console.log('Job created successfully:', data.createJob.job);
+        } else {
+          console.log('Failed to create job:', data.createJob.message);
+        }
+      } catch (error) {
+        console.error('GraphQL mutation error:', error);
+      }
+    },
+    [createJob],
   );
+  
   return (
     <div className="contain">
       <Frame
@@ -82,7 +109,7 @@ const initialValues= {
             <Form>
                   {dirty ? (
                     <ContextualSaveBar
-                      message="Unsaved changes"
+                      message="maryam alipour"
                       discardAction={{
                         onAction: () => {
                           navigate("/NewJobs");
@@ -118,4 +145,12 @@ const initialValues= {
     </div>
   );
 }
+
+
+
+
+
+
+
+
 

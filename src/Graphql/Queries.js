@@ -46,7 +46,7 @@ export const searchQuery = gql`
 `;
 
 export const SKILLS = gql`
-  query Skills($title: String!, $limit: Int) {
+  query skills($title: String!, $limit: Int) {
     skills(title: $title, limit: $limit) {
       skills {
         id

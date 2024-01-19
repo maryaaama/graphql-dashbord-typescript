@@ -6,7 +6,7 @@ import {TextField} from "@satel/formik-polaris";
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { CREATE_USER } from "../../Graphql/Mutations";
-import './CreateUser.css';
+import './Register.css';
 
 const validationSchema = yup.object({
   email: yup.string('Enter your email').email('Enter a valid email').required('Email is required'),
@@ -14,7 +14,7 @@ const validationSchema = yup.object({
   confirmpassword: yup.string('Enter your confirmpassword').min(6, 'confirmpassword should be of minimum 4 characters length').required('confirmpassword is required'),
 });
 
-export default function CreateUser() {
+export default function Register() {
   const [createUser, { loading, error  }] = useMutation(CREATE_USER);
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);

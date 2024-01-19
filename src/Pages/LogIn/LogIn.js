@@ -33,11 +33,16 @@ export default function LogIn() {
                 email: values.email,
                 password: values.password,
               },
+              
             });
             console.log('Token:', data.login.token);
+            
             if (data.login.token !== null) {
-              navigate('/Users', { token: data.login.token });
-            } else {
+              localStorage.setItem('token',data.login.token);
+              localStorage.setItem('user',values.email);
+              navigate('/Client', { token: data.login.token });
+            } 
+            else {
               alert('ایمیل و پسورد را درست وارد کنید');
               console.log('error');
             }
@@ -46,9 +51,6 @@ export default function LogIn() {
           }
         
           console.log('values: ', values);
-          localStorage.setItem('email',values.email);
-          localStorage.setItem('password',values.password);
-         
         }
       
         if (loading) return null;
