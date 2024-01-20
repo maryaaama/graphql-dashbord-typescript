@@ -78,7 +78,7 @@ const initialValues= {
           },
         });
   
-        if (data.createJob.status === "success") {
+        if (data.createJob.status) {
           console.log('Job created successfully:', data.createJob.job);
         } else {
           console.log('Failed to create job:', data.createJob.message);

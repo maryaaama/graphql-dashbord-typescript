@@ -6,10 +6,9 @@ const httpLink = new HttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  // Get the authentication token from local storage or another source
+ 
   const token = localStorage.getItem('token');
-  console.log('set client x-token',token);
-  // Return the headers to the context so httpLink can read them
+ 
   return {
     headers: {
       ...headers,

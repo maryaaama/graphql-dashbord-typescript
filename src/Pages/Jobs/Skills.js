@@ -11,14 +11,18 @@ const Skills = ({ label, ...props }) => {
 
     const [selectedTags, setSelectedTags] = useState(['FrontEnd']);
     const [value, setValue] = useState('');
+    const [valueData, setValueData] = useState([]);
     const [suggestion, setSuggestion] = useState('');
    
   const { data,refetch } = useQuery(SKILLS, {
     variables: {
       title:value,
-      limit: 5,
+      limit: 10,
     },
+    fetchPolicy: "network-only",
+    nextFetchPolicy: "cache-first",
   });
+  
   const name=props.name;
   const handleBlur = useCallback(() => {
     field.onBlur({ target: { name } });
@@ -83,44 +87,25 @@ const Skills = ({ label, ...props }) => {
     );
 
     const getAllTags = useCallback(() => {
-      const savedTags = ['backend', 'sever', 'qraphql', 'polaris', 'javascript'];
-      return [...new Set([...savedTags, ...selectedTags].sort())];
-    }, [selectedTags]);
-    
-    /*const getAllTags = useCallback(() => {
-      console.log('getAllTags')
-      // const savedTags = ['BackEnd', 'FrontEnd', 'React', 'JavaScript', 'Pyton'];
-      const savedTags = data?.skills || [];
-      return [...new Set([...savedTags, ...selectedTags].sort())];
+
+      if(data?.skills?.skills){
+        const  saveDatas = [... data.skills.skills];
+
+        for (let saveData of saveDatas) {
+          setValueData(prevState=>{return[...prevState,saveData.title]})
+          }
+          
+       }else{ console.log('nabod');}
       
-    }, [selectedTags]);*/
-  
-    const formatOptionText = useCallback(
-      (option) => {
-        const trimValue = value.trim().toLocaleLowerCase();
-        const matchIndex = option.toLocaleLowerCase().indexOf(trimValue);
-        if (!value || matchIndex === -1) return option;
-  
-        const start = option.slice(0, matchIndex);
-        const highlight = option.slice(matchIndex, matchIndex + trimValue.length);
-        const end = option.slice(matchIndex + trimValue.length, option.length);
-  
-        return (
-          <p>
-            {start}
-            <Text fontWeight="bold" as="span">
-              {highlight}
-            </Text>
-            {end}
-          </p>
-        );
-      },
-      [value],
-    );
+       const savedTags = [...valueData]
+       console.log('savedTags' ,savedTags);
+      return [...new Set([...savedTags, ...selectedTags].sort())];
+    }, [data?.skills, selectedTags]);
+    
     const options = useMemo(() => {
       let list;
       const allTags = getAllTags();
-     
+     console.log('allTags',allTags)
       const filterRegex = new RegExp(value, 'i');
       if (value) {
         list = allTags.filter((tag) => tag.match(filterRegex));
@@ -142,7 +127,7 @@ const Skills = ({ label, ...props }) => {
       </BlockStack>
     ) : null;
 
-   const optionMarkup =
+  const optionMarkup =
     options.length > 0
       ? options.map((option) => {
        
@@ -154,36 +139,19 @@ const Skills = ({ label, ...props }) => {
               accessibilityLabel={option}
             >
               <Listbox.TextOption selected={selectedTags.includes(option)}>
-                {formatOptionText(option)}
+                {option}
+                {/*formatOptionText(option)*/}
               </Listbox.TextOption>
             </Listbox.Option>
           );
         })
       : null;
 
-      /* const optionMarkup = data
-      ? data.skills.skills.map((option) => {
-          const { title, id } = option;
-          return (
-            <Listbox.Option
-              key={`${title + id}`}
-              value={title}
-              selected={selectedTags.includes(title)}
-              accessibilityLabel={label}
-            >
-              {title}
-            </Listbox.Option>
-          );
-        })
-      : null;*/
-  
-
-
       const noResults = value && !getAllTags().includes(value);
       
       const actionMarkup = noResults ? (
-    <Listbox.Action value={value}>{`Add "${value}"`}</Listbox.Action>
-  ) : null;
+        <Listbox.Action value={value}>{`Add "${value}"`}</Listbox.Action>
+        ) : null;
 
   const emptyStateMarkup = optionMarkup ? null : (
     <EmptySearchResult
@@ -191,8 +159,8 @@ const Skills = ({ label, ...props }) => {
       description={`No tags found matching "${value}"`}
     />
   );
+
   const listboxMarkup =
-  
   optionMarkup || actionMarkup || emptyStateMarkup ? (
     <Listbox
       autoSelection={AutoSelection.None}
@@ -204,12 +172,6 @@ const Skills = ({ label, ...props }) => {
     </Listbox>
   ) : null;
 
-
-  useEffect(() => {
-    refetch();
-  }, [value, refetch]);
-  
-   
     return (
       <div>
         <label htmlFor={props.id || props.name}>{label}</label>

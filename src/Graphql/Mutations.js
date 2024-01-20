@@ -20,7 +20,7 @@ export const CREATE_USER = gql`
     }
   }
 `;
-export const DeleteJob = gql`
+export const DELETE_JOB = gql`
   mutation DeleteJob($id: Int!) {
     deleteJob(id: $id) {
       message
@@ -57,7 +57,7 @@ export const CREATE_JOB = gql`
   }
 `;
 
-export const UpdateJob = gql`
+export const UPDATE_JOB = gql`
   mutation UpdateJob(
     $id: Int!
     $title: String!

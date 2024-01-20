@@ -8,7 +8,7 @@ export const SHOW_TOKENS = gql`
     }
   }
 `;
-export const jobsQuery = gql`
+export const JOB_QUERY = gql`
   query Jobs($page: Int!, $pageSize: Int!, $sort: String!) {
     jobs(page: $page, pageSize: $pageSize, sort: $sort) {
       jobs {
@@ -27,7 +27,7 @@ export const jobsQuery = gql`
     }
   }
 `;
-export const searchQuery = gql`
+export const SEARCH_QUERY = gql`
   query SearchJob($name: String!, $page: Int!, $limit: Int!, $sort: String!) {
     searchJob(name: $name, page: $page, limit: $limit, sort: $sort) {
       jobs {
@@ -58,7 +58,7 @@ export const SKILLS = gql`
   }
 `;
 
-export const Job = gql`
+export const JOB = gql`
   query job($id: Int!) {
     job(id: $id) {
       job {

@@ -40,7 +40,7 @@ export default function LogIn() {
             if (data.login.token !== null) {
               localStorage.setItem('token',data.login.token);
               localStorage.setItem('user',values.email);
-              navigate('/Client', { token: data.login.token });
+              navigate('/Dashboard', { token: data.login.token });
             } 
             else {
               alert('ایمیل و پسورد را درست وارد کنید');
