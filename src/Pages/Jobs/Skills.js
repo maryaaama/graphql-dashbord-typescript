@@ -90,17 +90,14 @@ const Skills = ({ label, ...props }) => {
 
       if(data?.skills?.skills){
         const  saveDatas = [... data.skills.skills];
-
         for (let saveData of saveDatas) {
           setValueData(prevState=>{return[...prevState,saveData.title]})
-          }
-          
+          }   
        }else{ console.log('nabod');}
-      
        const savedTags = [...valueData]
-       console.log('savedTags' ,savedTags);
       return [...new Set([...savedTags, ...selectedTags].sort())];
     }, [data?.skills, selectedTags]);
+    
     
     const options = useMemo(() => {
       let list;
