@@ -17,7 +17,7 @@ function App (){
  <ApolloProvider client={SetClient}>
     <Routes>
         <Route path="/Dashboard" element={<Dashboard />} />
-        <Route path='/Home' element={<Home/>} />
+        <Route path='/' element={<Home/>} />
         <Route path="/JobList" element={<JobList />} />
         <Route path='/NewJob' element={<NewJob/>} />
         <Route path='/Register' element={<Register/>} />

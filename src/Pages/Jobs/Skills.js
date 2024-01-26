@@ -93,7 +93,7 @@ const Skills = ({ label, ...props }) => {
         for (let saveData of saveDatas) {
           setValueData(prevState=>{return[...prevState,saveData.title]})
           }   
-       }else{ console.log('nabod');}
+       }else{ console.log(error);}
        const savedTags = [...valueData]
       return [...new Set([...savedTags, ...selectedTags].sort())];
     }, [data?.skills, selectedTags]);

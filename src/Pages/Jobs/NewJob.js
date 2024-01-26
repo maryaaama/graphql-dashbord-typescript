@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form } from "formik";
-import { Card, Button, FormLayout ,ContextualSaveBar,Frame} from "@shopify/polaris";
+import { Card, Page, FormLayout ,ContextualSaveBar,Frame} from "@shopify/polaris";
 import {TextField,Select} from "@satel/formik-polaris";
 import * as yup from 'yup';
 import './NewJob.css';
@@ -91,7 +91,9 @@ const initialValues= {
   );
   
   return (
+   
     <div className="contain">
+       <Page fullWidth title="New Job" >
       <Frame
        logo={{
         width: 86,
@@ -106,13 +108,13 @@ const initialValues= {
     >
       {({ values, dirty ,submitForm, isSubmitting}) => (
         <>
-            <Form>
+            <Form >
                   {dirty ? (
                     <ContextualSaveBar
                       message="maryam alipour"
                       discardAction={{
                         onAction: () => {
-                          navigate("/NewJobs");
+                          navigate("/JobList");
                         },
                       }}
                       saveAction={{
@@ -142,6 +144,7 @@ const initialValues= {
       )}
     </Formik>
     </Frame>
+    </Page>
     </div>
   );
 }
