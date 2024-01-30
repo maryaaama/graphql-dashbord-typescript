@@ -7,7 +7,8 @@ import Job from './Job';
 import './JobList.css';
 import {SEARCH_QUERY} from '../../Graphql/Queries.js';
 import {JOB_QUERY} from '../../Graphql/Queries.js'; 
-import { useQuery } from '@apollo/client';
+
+import { useMutation, useQuery } from '@apollo/client';
 
 export default function JobList() {
 
@@ -17,7 +18,7 @@ export default function JobList() {
   const [value,setValue]=useState([]);
   const [input] = useDebounce(queryValue, 350);
   const [sort, setSort] = useState('');
- 
+  
   const { loading, data:listJob } = useQuery(JOB_QUERY, {
     variables: {
       page: pageValue,
@@ -38,7 +39,7 @@ export default function JobList() {
     fetchPolicy: "network-only",
     skip: queryValue !== "" ? false : true,
   });
-  
+ 
   const handleSortChange = useCallback(
     (value) => setSort(value),
     console.log('sort',sort),
@@ -105,8 +106,7 @@ export default function JobList() {
      setValue(listJob.jobs.jobs)}
      if (searchJobError) {
       console.error("Error fetching search results:", searchJobError);
-    }else{
-     console.log('SearchJob',SearchJob);}
+    }
   }, [listJob,pageValue,SearchJob]);
   
   const items = useMemo(() => {
@@ -114,7 +114,9 @@ export default function JobList() {
       return listJob?.jobs?.jobs;
     }
     if (SearchJob) {
+      console.log('SearchJob',SearchJob.jobs);
       return SearchJob?.searchJob?.jobs;
+      
     }
     return [];
   }, [listJob,SearchJob]);
@@ -158,10 +160,8 @@ export default function JobList() {
             return (
               <ResourceList.Item
                 id={item.id}
-                accessibilityLabel={`View details for ${item.id}`}
-                
+                accessibilityLabel={`View details for ${item.id}`} 
               >
-              
                <Job value={item} key={item.index}/> 
               </ResourceList.Item>
             );

@@ -5,11 +5,12 @@ import { Tag,Listbox,EmptySearchResult,Combobox,Text,AutoSelection,BlockStack} f
 import { SKILLS } from "../../Graphql/Queries";
 
 
-const Skills = ({ label, ...props }) => {
+const Skills = ({ label,initialSelectedSkills, ...props }) => {
+  console.log('props',props)
     const {setFieldValue , setFieldError} = useFormikContext();
     const [field, meta] = useField(props);
 
-    const [selectedTags, setSelectedTags] = useState(['FrontEnd']);
+    const [selectedTags, setSelectedTags] = useState(initialSelectedSkills || []);
     const [value, setValue] = useState('');
     const [valueData, setValueData] = useState([]);
     const [suggestion, setSuggestion] = useState('');
@@ -85,8 +86,22 @@ const Skills = ({ label, ...props }) => {
       },
       [updateSelection],
     );
-
     const getAllTags = useCallback(() => {
+      let savedTags = [];
+      
+      if (data?.skills?.skills) {
+        savedTags = data.skills.skills.map((saveData) => saveData.title);
+      } else {
+        console.log(error);
+      }
+    
+      const allTags = [...new Set([...savedTags, ...selectedTags].sort())];
+      setValueData(allTags); // Update the state once with all the titles
+    
+      return allTags;
+    }, [data?.skills, selectedTags, setValueData, error]);
+    
+   /* const getAllTags = useCallback(() => {
 
       if(data?.skills?.skills){
         const  saveDatas = [... data.skills.skills];
@@ -98,7 +113,7 @@ const Skills = ({ label, ...props }) => {
       return [...new Set([...savedTags, ...selectedTags].sort())];
     }, [data?.skills, selectedTags]);
     
-    
+    */
     const options = useMemo(() => {
       let list;
       const allTags = getAllTags();
@@ -137,7 +152,7 @@ const Skills = ({ label, ...props }) => {
             >
               <Listbox.TextOption selected={selectedTags.includes(option)}>
                 {option}
-                {/*formatOptionText(option)*/}
+               
               </Listbox.TextOption>
             </Listbox.Option>
           );
