@@ -6,7 +6,7 @@ import { SKILLS } from "../../Graphql/Queries";
 
 
 const Skills = ({ label,initialSelectedSkills, ...props }) => {
-  console.log('props',props)
+ 
     const {setFieldValue , setFieldError} = useFormikContext();
     const [field, meta] = useField(props);
 
