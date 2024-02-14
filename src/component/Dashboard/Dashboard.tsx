@@ -1,9 +1,9 @@
 import {Frame, Navigation} from '@shopify/polaris';
-import {HomeMinor, OrdersMinor, PackageMajor} from '@shopify/polaris-icons';
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Dashboard() {
+  const token = localStorage.getItem('token');
   return (
     <>
     <Frame>
@@ -14,7 +14,7 @@ export default function Dashboard() {
           items={[
             { 
               label: 'NewJob',
-              icon: PackageMajor ,
+              
             },
           ]}
         />
@@ -24,7 +24,7 @@ export default function Dashboard() {
           items={[
             {
               label: 'Home',
-              icon: HomeMinor,
+              
             },
           ]}
         />

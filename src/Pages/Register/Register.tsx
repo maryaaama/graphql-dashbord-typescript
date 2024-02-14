@@ -9,9 +9,9 @@ import { CREATE_USER } from "../../Graphql/Mutations";
 import './Register.css';
 
 const validationSchema = yup.object({
-  email: yup.string('Enter your email').email('Enter a valid email').required('Email is required'),
-  password: yup.string('Enter your password').min(6, 'Password should be of minimum 4 characters length').required('Password is required'),
-  confirmpassword: yup.string('Enter your confirmpassword').min(6, 'confirmpassword should be of minimum 4 characters length').required('confirmpassword is required'),
+  email: yup.string().email('Enter a valid email').required('Email is required'),
+  password: yup.string().min(6, 'Password should be of minimum 4 characters length').required('Password is required'),
+  confirmpassword: yup.string().min(6, 'confirmpassword should be of minimum 4 characters length').required('confirmpassword is required'),
 });
 
 export default function Register() {
@@ -30,7 +30,7 @@ export default function Register() {
 
   const handleSubmit =  useCallback(
     
-    async (values) => {
+    async (values:any) => {
       console.log('handelsubmit value',values);
       if (values.password === values.confirmpassword) {
 
@@ -74,12 +74,12 @@ export default function Register() {
        {({  dirty }) => (
         <>
           <Form>
-          <Card sectioned>
+          <Card>
           <FormLayout>
-            <TextField label="Email" name="email" />
-            <TextField label="Password" name="password"  />
-            <TextField label="Confirm Password" name="confirmpassword" />
-            <Button submit primary > Save </Button>
+            <TextField label="Email" name="email" autoComplete=""/>
+            <TextField label="Password" name="password" autoComplete="" />
+            <TextField label="Confirm Password" name="confirmpassword" autoComplete=""/>
+            <Button submit variant="primary" > Save </Button>
           </FormLayout>
             </Card>
           </Form>

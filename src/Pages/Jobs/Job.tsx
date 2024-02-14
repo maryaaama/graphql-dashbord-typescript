@@ -15,17 +15,15 @@ import {
 import {DELETE_JOB} from '../../Graphql/Mutations.js';
 
 
-export default function Job({ value }) {
+export default function Job( value:any) {
 
-  console.log('job value',value);
-  
   const navigate = useNavigate();
-  const[jobId,setJobId]=useState();
+  const[jobId,setJobId]=useState<number>();
   const [deleteJob]=useMutation(DELETE_JOB);
   const [activeModal, setActiveModal] = useState(false);
 
   const handleChange = useCallback(() => setActiveModal(!activeModal), [activeModal]); 
-  const handleDeleteAction = useCallback((id) => {
+  const handleDeleteAction = useCallback((id:number) => {
     setJobId(id);
     setActiveModal(true);
   }, [setJobId, setActiveModal]);
@@ -63,7 +61,7 @@ export default function Job({ value }) {
             <BlockStack gap="200">
             <InlineGrid columns="1fr auto">
               <Text as="h3" variant="headingSm" fontWeight="medium">
-               {value.skills.map((skill) => (
+               {value.skills.map((skill:any) => (
                <Tag key={skill.id}>{skill.title}</Tag>
                 ))}
                </Text>
@@ -93,14 +91,14 @@ export default function Job({ value }) {
                    ]}
                  >
                <Modal.Section>
-               <Text>
+              
                <Banner  tone="warning">
                 <p>
                 Are you sure you want to delete the job?
                 </p>
                </Banner>
                
-             </Text>
+            
             </Modal.Section>
             </Modal>
            )}

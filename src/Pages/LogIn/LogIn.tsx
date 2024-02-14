@@ -10,8 +10,8 @@ import { LOGIN_USER } from "../../Graphql/Mutations";
 import './LogIn.css';
 
 const validationSchema = yup.object({
-    email: yup.string('Enter your email').email('Enter a valid email').required('Email is required'),
-    password: yup.string('Enter your password').min(6, 'Password should be of minimum 4 characters length').required('Password is required'),
+    email: yup.string().email('Enter a valid email').required('Email is required'),
+    password: yup.string().min(6, 'Password should be of minimum 4 characters length').required('Password is required'),
     
   });
 
@@ -19,13 +19,13 @@ export default function LogIn() {
     const navigate = useNavigate();
     const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
 
-     const initialValues={
+     const initialValues: { email: string; password: string }={
           email: 'maryam@example.com',
           password: 'maryam',   
         }
 
        
-       const handleSubmit= async (values) => {
+       const handleSubmit= async (values:any) => {
           try {
             const { data } = await loginUser({
               mutation: LOGIN_USER,
@@ -40,7 +40,7 @@ export default function LogIn() {
             if (data.login.token !== null) {
               localStorage.setItem('token',data.login.token);
               localStorage.setItem('user',values.email);
-              navigate('/Dashboard', { token: data.login.token });
+              navigate('/Dashboard');
             } 
             else {
               alert('ایمیل و پسورد را درست وارد کنید');
@@ -68,9 +68,9 @@ export default function LogIn() {
         <>
           <Form>
             <Card>
-              <TextField name="email" label="Email" />
-              <TextField name="password" label="Password" type="password" />
-              <Button submit primary > LogIn </Button>
+              <TextField name="email" label="Email" autoComplete=""/>
+              <TextField name="password" label="Password" type="password" autoComplete=""/>
+              <Button submit variant="primary" > LogIn </Button>
            </Card>
          </Form>
         </>

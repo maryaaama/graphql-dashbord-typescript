@@ -17,7 +17,7 @@ export default function JobList() {
   const [pageValue, setPageValue] = useState(1);
   const [value,setValue]=useState([]);
   const [input] = useDebounce(queryValue, 350);
-  const [sort, setSort] = useState('');
+  const [sort, setSort] = useState<any>('');
   
   const { loading, data:listJob } = useQuery(JOB_QUERY, {
     variables: {
@@ -40,24 +40,23 @@ export default function JobList() {
     skip: queryValue !== "" ? false : true,
   });
  
-  const handleSortChange = useCallback(
-    (value) => setSort(value),
-    console.log('sort',sort),
-    [],
-  );
  
+ 
+  const handleSortChange = useCallback(
+    (value: any) => setSort(value),
+   [],);
+   
   const handleFiltersQueryChange = useCallback(
-    (value) => setQueryValue(value),
-    console.log('queryValue',queryValue),
-    [],
-  );
+    (value:string) => setQueryValue(value),
+    [],);
+
   const handleSortRemove = useCallback(
-    () => setSort(undefined),
+    () => setSort(''),
     [],
   );
  
   const handleQueryValueRemove = useCallback(
-    () => setQueryValue(undefined),
+    () => setQueryValue(''),
     [],
   );
   const handleFiltersClearAll = useCallback(() => {
@@ -81,7 +80,7 @@ export default function JobList() {
             {label: 'Oldest update', value: 'ASC'},
           
           ]}
-          selected={sort || []}
+          selected={(sort || []) as string[]}
           onChange={handleSortChange}
           
         />
@@ -109,7 +108,7 @@ export default function JobList() {
     }
   }, [listJob,pageValue,SearchJob]);
   
-  const items = useMemo(() => {
+  const items:any = useMemo(() => {
     if (listJob) {
       return listJob?.jobs?.jobs;
     }
@@ -121,13 +120,13 @@ export default function JobList() {
     return [];
   }, [listJob,SearchJob]);
 
-  const filteredItems = items.filter(item => {
+  const filteredItems = items ? items.filter((item:any) => {
     return (
       !queryValue ||
       item.title.toLowerCase().includes(queryValue.toLowerCase()) ||
       item.description.toLowerCase().includes(queryValue.toLowerCase())
     );
-  });
+  }) : [];
   return (
     <>
     <Page
@@ -161,6 +160,7 @@ export default function JobList() {
               <ResourceList.Item
                 id={item.id}
                 accessibilityLabel={`View details for ${item.id}`} 
+                onClick={() => {}}
               >
                <Job value={item} key={item.index}/> 
               </ResourceList.Item>
@@ -196,7 +196,7 @@ export default function JobList() {
     </Page>
     </>
   );
-  function disambiguateLabel(key,value) {
+  function disambiguateLabel(key:any,value:any) {
     switch (key) {
       case 'moneySpent':
         return `Money spent is between $${value[0]} and $${value[1]}`;
@@ -204,7 +204,7 @@ export default function JobList() {
         return value;
     }
   }
-  function isEmpty(value){
+  function isEmpty(value:string){
     if (Array.isArray(value)) {
       return value.length === 0;
     } else {

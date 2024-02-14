@@ -1,17 +1,17 @@
  import React from 'react';
  import './App.css';
  import {Routes , Route} from 'react-router-dom';
- import Home from './Pages/Home/Home.js';
- import NewJob from './Pages/Jobs/NewJob.js';
- import Register from './Pages/Register/Register.js';
- import JobList from './Pages/Jobs/JobList.js';
- import Job from './Pages/Jobs/Job.js';
- import LogIn from './Pages/LogIn/LogIn.js';
+ import Home from './Pages/Home/Home';
+ import NewJob from './Pages/Jobs/NewJob';
+ import Register from './Pages/Register/Register';
+ import JobList from './Pages/Jobs/JobList';
+ import Job from './Pages/Jobs/Job';
+ import LogIn from './Pages/LogIn/LogIn';
  import {ApolloProvider } from '@apollo/client';
- import {SetClient} from './component/SetClient/SetClient.js';
+ import {SetClient} from './component/SetClient/SetClient';
  import '@shopify/polaris/build/esm/styles.css';
- import Dashboard from './component/Dashboard/Dashboard.js';
-import EditJob from './Pages/Jobs/EditJob.js';
+ import Dashboard from './component/Dashboard/Dashboard';
+import EditJob from './Pages/Jobs/EditJob';
 
 function App (){ 
   return (

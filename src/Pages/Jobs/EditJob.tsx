@@ -25,15 +25,15 @@ const cityOptions = [
 
 
 const validationSchemaForm = yup.object({
-  title: yup.string('Enter your title').required('Title is required'),
-  description: yup.string('Enter your description').required('description is required'),
-  city: yup.string('Enter your city').required('City is required'),
+  title: yup.string().required('Title is required'),
+  description: yup.string().required('description is required'),
+  city: yup.string().required('City is required'),
   skills: yup.array().min(1).required("required !"),
 });
 export default function EditJob() {
   const navigate=useNavigate();
   let params=useParams();
-  const itemID = parseInt(params.id);
+  const itemID = parseInt(params.id || "", 10);
   console.log('params',itemID)
   const [updateJob,error] = useMutation(UPDATE_JOB);
  
@@ -50,10 +50,12 @@ console.log('value.title', value?.title);
 /*let formSkills = [];
 if (value && value.skills) {
   formSkills = value.skills.map((skill) => skill.title.replace("_", " "));
-  
+  const formSkills = value?.skills?.map((skill:string[]) => skill.title.toLowerCase()) || [];
+console.log('formSkills', formSkills);
 }*/
 
-const formSkills = value?.skills?.map((skill) => skill.title.toLowerCase()) || [];
+
+const formSkills = (value?.skills || []).map((skill: { title: string }) => skill.title.toLowerCase());
 console.log('formSkills', formSkills);
 
 const initialValuesForm = {
@@ -63,7 +65,7 @@ const initialValuesForm = {
   skills: formSkills || [],
 };
   const handleSubmitForm = useCallback(
-    async (formValues) => {
+    async (formValues:any) => {
       try {
         const { data } = await updateJob({
           variables: {
@@ -128,10 +130,10 @@ const initialValuesForm = {
                     />
                   
 
-                  <Card sectioned>
+                  <Card>
                     <FormLayout>
-                      <TextField label="Title" name="title" />
-                      <TextField label="Description" name="description" multiline={4} />
+                      <TextField label="Title" name="title" autoComplete=""/>
+                      <TextField label="Description" name="description" multiline={4} autoComplete=""/>
                       <Select label="city" name="city" options={cityOptions} />
                       <div className="skills">
                       <Skills label="Skills" name="skills" initialSelectedSkills={formSkills} />
@@ -140,7 +142,7 @@ const initialValuesForm = {
                   </Card>
                 </Form>
                 <br />
-                <Card subdued sectioned title="Internal Form Values">
+                <Card>
                   <pre>{JSON.stringify(values, null, 2)}</pre>
                 </Card>
               </>
