@@ -6,6 +6,7 @@ import {TextField} from "@satel/formik-polaris";
 import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import { CREATE_USER } from "../../Graphql/Mutations";
+import {useCreateUserMutation} from "../../generated/graphql";
 import './Register.css';
 
 const validationSchema = yup.object({
@@ -15,7 +16,7 @@ const validationSchema = yup.object({
 });
 
 export default function Register() {
-  const [createUser, { loading, error  }] = useMutation(CREATE_USER);
+  const [createUser, { loading, error  }] =useCreateUserMutation();
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
 
@@ -36,14 +37,13 @@ export default function Register() {
 
         try {
           const { data } = await createUser({
-            mutation: CREATE_USER,
+           
             variables: {
               email: values.email,
               password: values.password,
             },
           });
-          console.log('message:', data.createUser.message);
-          console.log('status:', data.createUser.status);
+         
           setUsers(values)
           navigate('/LogIn');
          

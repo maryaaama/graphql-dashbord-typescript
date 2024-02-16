@@ -12,14 +12,14 @@ import {
   Modal,
   Banner
 } from '@shopify/polaris';
-import {DELETE_JOB} from '../../Graphql/Mutations.js';
-
+import {useDeleteJobMutation} from "../../generated/graphql";
 
 export default function Job( value:any) {
-
+console.log('Jobvalue',value)
+console.log('Jobvalue.title',value.title)
   const navigate = useNavigate();
-  const[jobId,setJobId]=useState<number>();
-  const [deleteJob]=useMutation(DELETE_JOB);
+  const[jobId,setJobId]=useState<number>(value.id);
+  const [deleteJob]=useDeleteJobMutation();
   const [activeModal, setActiveModal] = useState(false);
 
   const handleChange = useCallback(() => setActiveModal(!activeModal), [activeModal]); 
@@ -48,20 +48,20 @@ export default function Job( value:any) {
   
   return (
     <>
-        <Card key={value.id} roundedAbove="sm">
+        <Card key={value.value.id} roundedAbove="sm">
           <BlockStack gap="400">
             <BlockStack gap="200">
               <Text as="h2" variant="headingSm">
-                {value.title}
+                {value.value.title}
               </Text>
               <Text as="p" variant="bodyMd">
-                {value.description}
+                {value.value.description}
               </Text>
             </BlockStack>
             <BlockStack gap="200">
             <InlineGrid columns="1fr auto">
               <Text as="h3" variant="headingSm" fontWeight="medium">
-               {value.skills.map((skill:any) => (
+               {value.value?.skills?.map((skill:any) => (
                <Tag key={skill.id}>{skill.title}</Tag>
                 ))}
                </Text>

@@ -5,21 +5,19 @@ import React, { useEffect, useState,useCallback,useMemo} from 'react';
 import { useDebounce } from 'use-debounce';
 import Job from './Job';
 import './JobList.css';
-import {SEARCH_QUERY} from '../../Graphql/Queries.js';
-import {JOB_QUERY} from '../../Graphql/Queries.js'; 
+import {useSearchJobQuery , useJobsQuery} from "../../generated/graphql";
 
-import { useMutation, useQuery } from '@apollo/client';
 
 export default function JobList() {
 
   const [queryValue, setQueryValue] = useState("");
   const [sortValue, setSortValue] = useState("DESC");
   const [pageValue, setPageValue] = useState(1);
-  const [value,setValue]=useState([]);
+  const [value,setValue]=useState<any>([]);
   const [input] = useDebounce(queryValue, 350);
   const [sort, setSort] = useState<any>('');
   
-  const { loading, data:listJob } = useQuery(JOB_QUERY, {
+  const { loading, data:listJob } = useJobsQuery({
     variables: {
       page: pageValue,
       pageSize: 2,
@@ -29,7 +27,7 @@ export default function JobList() {
     skip: queryValue === "" ? false : true,
   });
 
-  const { loading: searchJobLoading, data: SearchJob , error: searchJobError}=useQuery(SEARCH_QUERY,{
+  const { loading:searchJobLoading, data:SearchJob , error:searchJobError}=useSearchJobQuery({
     variables: {
       name: input,
       page: 1,
@@ -99,7 +97,7 @@ export default function JobList() {
     });
   }
   
-  useEffect(() => {
+ useEffect(() => {
     if (listJob && listJob.jobs && listJob.jobs.jobs) {
     console.log(listJob.jobs.jobs);
      setValue(listJob.jobs.jobs)}
@@ -108,17 +106,19 @@ export default function JobList() {
     }
   }, [listJob,pageValue,SearchJob]);
   
+  
   const items:any = useMemo(() => {
     if (listJob) {
       return listJob?.jobs?.jobs;
     }
     if (SearchJob) {
-      console.log('SearchJob',SearchJob.jobs);
+      
       return SearchJob?.searchJob?.jobs;
       
     }
     return [];
   }, [listJob,SearchJob]);
+ 
 
   const filteredItems = items ? items.filter((item:any) => {
     return (
@@ -127,6 +127,7 @@ export default function JobList() {
       item.description.toLowerCase().includes(queryValue.toLowerCase())
     );
   }) : [];
+ 
   return (
     <>
     <Page

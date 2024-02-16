@@ -6,12 +6,12 @@ import { Card, Page, FormLayout ,ContextualSaveBar,Frame} from "@shopify/polaris
 import {TextField,Select} from "@satel/formik-polaris";
 import * as yup from 'yup';
 import './NewJob.css';
-import { useMutation ,useQuery} from '@apollo/client';
 import Skills from './Skills';
 import {UPDATE_JOB } from "../../Graphql/Mutations";
 import {JOB} from "../../Graphql/Queries";
+import {useJobQuery,useUpdateJobMutation} from "../../generated/graphql";
 
-const cityOptions = [
+const cityOptions:{ label: string; value: string }[] = [
   { label: "Select", value: "select" },
   { label: "tehran", value: "tehran" },
   { label: "ahvaz", value: "ahvaz" },
@@ -35,16 +35,16 @@ export default function EditJob() {
   let params=useParams();
   const itemID = parseInt(params.id || "", 10);
   console.log('params',itemID)
-  const [updateJob,error] = useMutation(UPDATE_JOB);
+  const [updateJob,error] = useUpdateJobMutation();
  
-  const { data ,loading ,error: queryError} = useQuery(JOB, {
+  const { data ,loading ,error: queryError} = useJobQuery( {
     variables: { id: itemID },
     fetchPolicy: "network-only",
     nextFetchPolicy: "cache-first",
   });
   console.log('data',data);
  
-  const value = data?.job?.job;
+  const value:any = data?.job?.job;
 console.log('value.title', value?.title);
 
 /*let formSkills = [];
@@ -55,7 +55,16 @@ console.log('formSkills', formSkills);
 }*/
 
 
-const formSkills = (value?.skills || []).map((skill: { title: string }) => skill.title.toLowerCase());
+//const formSkills = (value?.skills || []).map((skill: { title: string }) => skill.title.toLowerCase());
+//console.log('formSkills', formSkills);
+const formSkills = (value?.skills || []).map((skill: { title: string } | null) => {
+  if (skill && typeof skill.title === 'string') {
+    return skill.title.toLowerCase();
+  } else {
+    return ''; // Handle the case when skill is null or undefined, or title is not a string
+  }
+});
+
 console.log('formSkills', formSkills);
 
 const initialValuesForm = {

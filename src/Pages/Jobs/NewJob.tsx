@@ -5,10 +5,8 @@ import { Card, Page, FormLayout ,ContextualSaveBar,Frame} from "@shopify/polaris
 import {TextField,Select} from "@satel/formik-polaris";
 import * as yup from 'yup';
 import './NewJob.css';
-import { useMutation } from '@apollo/client';
 import Skills from "./Skills";
-import { CREATE_JOB } from "../../Graphql/Mutations";
-
+import {useCreateJobMutation} from "../../generated/graphql";
 
 const OPTIONS:{ label: string; value: string }[] = [
   { label: "Select", value: "select" },
@@ -45,7 +43,7 @@ const initialValues: {
 }
  export default function NewJob() {
 
-  const [createJob, { error }] = useMutation(CREATE_JOB);
+  const [createJob, { error }] = useCreateJobMutation();
   
   const navigate = useNavigate();
 
@@ -62,11 +60,11 @@ const initialValues: {
           },
         });
   
-        if (data.createJob.status) {
-          console.log('Job created successfully:', data.createJob.job);
+        if (data?.createJob.status) {
+          console.log('Job created successfully:', data?.createJob.job);
           navigate('./JobList');
         } else {
-          console.log('Failed to create job:', data.createJob.message);
+          console.log('Failed to create job:', data?.createJob.message);
         }
       } catch (error) {
         console.error('GraphQL mutation error:', error);

@@ -1,12 +1,11 @@
 
-import React, { useState , useEffect } from 'react';
+import React from 'react';
 import { Formik, Form } from "formik";
 import * as yup from 'yup';
 import {TextField} from "@satel/formik-polaris";
 import { Card, Button} from "@shopify/polaris";
-import {useMutation, gql } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
-import { LOGIN_USER } from "../../Graphql/Mutations";
+import {useLoginMutation} from "../../generated/graphql";
 import './LogIn.css';
 
 const validationSchema = yup.object({
@@ -17,7 +16,7 @@ const validationSchema = yup.object({
 
 export default function LogIn() {
     const navigate = useNavigate();
-    const [loginUser, { loading, error }] = useMutation(LOGIN_USER);
+    const [loginUser, { loading, error }] = useLoginMutation();
 
      const initialValues: { email: string; password: string }={
           email: 'maryam@example.com',
@@ -28,24 +27,24 @@ export default function LogIn() {
        const handleSubmit= async (values:any) => {
           try {
             const { data } = await loginUser({
-              mutation: LOGIN_USER,
+             // mutation: LOGIN_USER,
               variables: {
                 email: values.email,
                 password: values.password,
               },
               
             });
-            console.log('Token:', data.login.token);
-            
-            if (data.login.token !== null) {
-              localStorage.setItem('token',data.login.token);
-              localStorage.setItem('user',values.email);
+            console.log('Token:', data?.login.token);
+           
+            if (data && data.login && data.login.token) {
+              localStorage.setItem('token', data.login.token);
+              localStorage.setItem('user', data.login.user?.email ?? '');
               navigate('/Dashboard');
-            } 
-            else {
+            } else {
               alert('ایمیل و پسورد را درست وارد کنید');
               console.log('error');
             }
+            
           } catch (error) {
             console.error('Error:', error);
           }

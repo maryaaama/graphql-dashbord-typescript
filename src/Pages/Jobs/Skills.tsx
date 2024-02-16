@@ -1,9 +1,8 @@
 import {useFormikContext, useField } from 'formik';
-import { useQuery } from "@apollo/client";
 import React, {useEffect, useState, useCallback, useMemo } from 'react';
 import { Tag,Listbox,EmptySearchResult,Combobox,Text,AutoSelection,BlockStack} from '@shopify/polaris';
-import { SKILLS } from "../../Graphql/Queries";
-import { string } from 'yup';
+import { useSkillsQuery} from "../../generated/graphql";
+
 
 
 const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
@@ -16,7 +15,7 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
     const [valueData, setValueData] = useState([]);
     const [suggestion, setSuggestion] = useState('');
    
-  const { data,refetch } = useQuery(SKILLS, {
+  const { data,refetch } =useSkillsQuery({
     variables: {
       title:value,
       limit: 10,
