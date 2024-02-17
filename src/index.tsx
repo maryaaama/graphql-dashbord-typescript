@@ -9,6 +9,10 @@ import en from "@shopify/polaris/locales/en.json";
 import reportWebVitals from './reportWebVitals';
 import '@shopify/polaris/build/esm/styles.css';
 
+
+
+
+
 ReactDOM.render(
   <AppProvider  i18n={en}>
     <BrowserRouter>

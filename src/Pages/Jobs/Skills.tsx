@@ -60,7 +60,7 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
       [name, setFieldValue]
     );
 
-    const updateSelection :any= useCallback(
+    const updateSelection:any= useCallback(
       (selected:string[]) => {
         const nextSelectedTags:any = new Set([...selectedTags]);
         if (nextSelectedTags.has(selected)) {
@@ -86,7 +86,12 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
       },
       [updateSelection],
     );
-    const getAllTags = useCallback(() => {
+    interface TagsData {
+      tags: string[];
+      error: string;
+    }
+    
+     const getAllTags = useCallback(() => {
       let savedTags:string[] = [];
       
       if (data?.skills?.skills) {
@@ -103,7 +108,7 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
     
    
     const options = useMemo(() => {
-      let list;
+      let list=[];
       const allTags = getAllTags();
      console.log('allTags',allTags)
       const filterRegex = new RegExp(value, 'i');
@@ -114,6 +119,7 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
       }
       return [...list];
     }, [value, getAllTags]);
+   
 
     const verticalContentMarkup =
     selectedTags.length > 0 ? (
@@ -146,7 +152,7 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
           );
         })
       : null;
-
+     
       const noResults = value && !getAllTags().includes(value);
       
       const actionMarkup = noResults ? (

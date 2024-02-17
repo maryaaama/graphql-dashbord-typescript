@@ -9,11 +9,11 @@ export default function Home() {
     <div>
       <Frame>
         <Navigation location="/">
-          <Link to='/CreateUser'>
+          <Link to='/Register'>
             <Navigation.Section
               items={[
                 { 
-                  label: 'createUser',
+                  label: 'Register',
                   
                 },
               ]}
