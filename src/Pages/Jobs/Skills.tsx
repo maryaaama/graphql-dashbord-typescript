@@ -3,14 +3,12 @@ import React, {useEffect, useState, useCallback, useMemo } from 'react';
 import { Tag,Listbox,EmptySearchResult,Combobox,Text,AutoSelection,BlockStack} from '@shopify/polaris';
 import { useSkillsQuery} from "../../generated/graphql";
 
-
-
 const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
  
     const {setFieldValue , setFieldError} = useFormikContext();
     const [field, meta] = useField(props);
 
-    const [selectedTags, setSelectedTags] = useState(initialSelectedSkills || []);
+    const [selectedTags, setSelectedTags] = useState<string[]>(['frontend']);
     const [value, setValue] = useState('');
     const [valueData, setValueData] = useState([]);
     const [suggestion, setSuggestion] = useState('');
@@ -42,7 +40,6 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
     const handleActiveOptionChange = useCallback(
       (activeOption:string) => {
         const activeOptionIsAction = activeOption === value;
-       
         if (!activeOptionIsAction && !selectedTags.includes(activeOption)) {
           setSuggestion(activeOption);
         } else {
@@ -60,8 +57,8 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
       [name, setFieldValue]
     );
 
-    const updateSelection:any= useCallback(
-      (selected:string[]) => {
+  /*  const updateSelection:any= useCallback(
+      (selected: string) => {
         const nextSelectedTags:any = new Set([...selectedTags]);
         if (nextSelectedTags.has(selected)) {
           nextSelectedTags.delete(selected);
@@ -77,19 +74,31 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
         handleSelectChange([...nextSelectedTags]);
       },
       [selectedTags, setValue, setSuggestion, handleSelectChange],
+    );*/
+    const updateSelection = useCallback(
+      (selected: string) => {
+        const nextSelectedTags = new Set([...selectedTags]);
+  
+        if (nextSelectedTags.has(selected)) {
+          nextSelectedTags.delete(selected);
+        } else {
+          nextSelectedTags.add(selected);
+        }
+        setSelectedTags([...nextSelectedTags]);
+        setValue('');
+        setSuggestion('');
+      },
+      [selectedTags],
     );
     
     const removeTag = useCallback(
-      (tag:any) => () => {
+      (tag:string) => () => {
         
         updateSelection(tag);
       },
       [updateSelection],
     );
-    interface TagsData {
-      tags: string[];
-      error: string;
-    }
+    
     
      const getAllTags = useCallback(() => {
       let savedTags:string[] = [];
@@ -105,20 +114,24 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
     
       return allTags;
     }, [data?.skills, selectedTags, setValueData, error]);
-    
+
+    const escapeSpecialRegExCharacters = useCallback(
+      (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+      [],
+    );
    
     const options = useMemo(() => {
-      let list=[];
+      let list;
       const allTags = getAllTags();
      console.log('allTags',allTags)
-      const filterRegex = new RegExp(value, 'i');
+      const filterRegex = new RegExp(escapeSpecialRegExCharacters(value), 'i');
       if (value) {
         list = allTags.filter((tag:string) => tag.match(filterRegex));
       } else {
         list = allTags;
       }
       return [...list];
-    }, [value, getAllTags]);
+    }, [value, getAllTags,escapeSpecialRegExCharacters],);
    
 
     const verticalContentMarkup =
@@ -136,7 +149,6 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
   const optionMarkup =
     options.length > 0
       ? options.map((option) => {
-       
           return (
             <Listbox.Option
               key={option}
@@ -183,8 +195,6 @@ const Skills = ({ label,initialSelectedSkills, ...props }:any) => {
         <label htmlFor={props.id || name}>{label}</label>
         <Combobox
         allowMultiple
-       
-       
         activator={
           <Combobox.TextField
             autoComplete="off"

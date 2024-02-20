@@ -1,12 +1,12 @@
 
 import {Page,Badge,Pagination,Divider, Card,ResourceList,
-  Filters,ChoiceList,Text} from '@shopify/polaris';
+  Filters,ChoiceList,Button} from '@shopify/polaris';
 import React, { useEffect, useState,useCallback,useMemo} from 'react';
 import { useDebounce } from 'use-debounce';
 import Job from './Job';
 import './JobList.css';
 import {useSearchJobQuery , useJobsQuery} from "../../generated/graphql";
-
+import { useNavigate } from 'react-router-dom';
 
 export default function JobList() {
 
@@ -16,7 +16,7 @@ export default function JobList() {
   const [value,setValue]=useState<any>([]);
   const [input] = useDebounce(queryValue, 350);
   const [sort, setSort] = useState<any>('');
-  
+  const navigaate=useNavigate();
   const { loading, data:listJob } = useJobsQuery({
     variables: {
       page: pageValue,
@@ -99,7 +99,7 @@ export default function JobList() {
   
  useEffect(() => {
     if (listJob && listJob.jobs && listJob.jobs.jobs) {
-    console.log(listJob.jobs.jobs);
+    console.log("JobList",listJob.jobs.jobs);
      setValue(listJob.jobs.jobs)}
      if (searchJobError) {
       console.error("Error fetching search results:", searchJobError);
@@ -127,6 +127,9 @@ export default function JobList() {
       item.description.toLowerCase().includes(queryValue.toLowerCase())
     );
   }) : [];
+  function backToCreatJob(){
+    navigaate('./NewJob')
+  }
  
   return (
     <>
@@ -139,6 +142,7 @@ export default function JobList() {
                       }}
       
       >
+        <Button onClick={backToCreatJob}>Create Job</Button>
         <div style={{ height: '568px' }}>
           <Card>
             <ResourceList

@@ -37,8 +37,11 @@ const react_router_dom_1 = require("react-router-dom");
 const polaris_1 = require("@shopify/polaris");
 const graphql_1 = require("../../generated/graphql");
 function Job(value) {
+    var _a, _b;
+    console.log('Jobvalue', value);
+    console.log('Jobvalue.title', value.title);
     const navigate = (0, react_router_dom_1.useNavigate)();
-    const [jobId, setJobId] = (0, react_1.useState)(0);
+    const [jobId, setJobId] = (0, react_1.useState)(value.id);
     const [deleteJob] = (0, graphql_1.useDeleteJobMutation)();
     const [activeModal, setActiveModal] = (0, react_1.useState)(false);
     const handleChange = (0, react_1.useCallback)(() => setActiveModal(!activeModal), [activeModal]);
@@ -47,14 +50,14 @@ function Job(value) {
         setActiveModal(true);
     }, [setJobId, setActiveModal]);
     const deletHandler = (0, react_1.useCallback)(() => __awaiter(this, void 0, void 0, function* () {
-        var _a;
+        var _c;
         try {
             const { data } = yield deleteJob({
                 variables: {
                     id: jobId,
                 },
             });
-            if ((_a = data === null || data === void 0 ? void 0 : data.deleteJob) === null || _a === void 0 ? void 0 : _a.status) {
+            if ((_c = data === null || data === void 0 ? void 0 : data.deleteJob) === null || _c === void 0 ? void 0 : _c.status) {
                 navigate("/JobList");
             }
         }
@@ -66,14 +69,14 @@ function Job(value) {
         }
     }), [deleteJob, jobId, navigate, setActiveModal]);
     return (react_1.default.createElement(react_1.default.Fragment, null,
-        react_1.default.createElement(polaris_1.Card, { key: value.id, roundedAbove: "sm" },
+        react_1.default.createElement(polaris_1.Card, { key: value.value.id, roundedAbove: "sm" },
             react_1.default.createElement(polaris_1.BlockStack, { gap: "400" },
                 react_1.default.createElement(polaris_1.BlockStack, { gap: "200" },
-                    react_1.default.createElement(polaris_1.Text, { as: "h2", variant: "headingSm" }, value.title),
-                    react_1.default.createElement(polaris_1.Text, { as: "p", variant: "bodyMd" }, value.description)),
+                    react_1.default.createElement(polaris_1.Text, { as: "h2", variant: "headingSm" }, value.value.title),
+                    react_1.default.createElement(polaris_1.Text, { as: "p", variant: "bodyMd" }, value.value.description)),
                 react_1.default.createElement(polaris_1.BlockStack, { gap: "200" },
                     react_1.default.createElement(polaris_1.InlineGrid, { columns: "1fr auto" },
-                        react_1.default.createElement(polaris_1.Text, { as: "h3", variant: "headingSm", fontWeight: "medium" }, value.skills.map((skill) => (react_1.default.createElement(polaris_1.Tag, { key: skill.id }, skill.title)))),
+                        react_1.default.createElement(polaris_1.Text, { as: "h3", variant: "headingSm", fontWeight: "medium" }, (_b = (_a = value.value) === null || _a === void 0 ? void 0 : _a.skills) === null || _b === void 0 ? void 0 : _b.map((skill) => (react_1.default.createElement(polaris_1.Tag, { key: skill.id }, skill.title)))),
                         react_1.default.createElement(polaris_1.ButtonGroup, null,
                             react_1.default.createElement(polaris_1.Button, { variant: "primary", tone: "critical", onClick: () => handleDeleteAction(value.id), accessibilityLabel: "Delete" }, "Delete"),
                             activeModal && (react_1.default.createElement(polaris_1.Modal, { open: activeModal, onClose: handleChange, title: "DLETE MODAL", primaryAction: {

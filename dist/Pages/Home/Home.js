@@ -11,10 +11,10 @@ function Home() {
     return (react_1.default.createElement("div", null,
         react_1.default.createElement(polaris_1.Frame, null,
             react_1.default.createElement(polaris_1.Navigation, { location: "/" },
-                react_1.default.createElement(react_router_dom_1.Link, { to: '/CreateUser' },
+                react_1.default.createElement(react_router_dom_1.Link, { to: '/Register' },
                     react_1.default.createElement(polaris_1.Navigation.Section, { items: [
                             {
-                                label: 'createUser',
+                                label: 'Register',
                             },
                         ] }))))));
 }

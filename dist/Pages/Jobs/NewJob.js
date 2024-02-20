@@ -42,8 +42,8 @@ const polaris_1 = require("@shopify/polaris");
 const formik_polaris_1 = require("@satel/formik-polaris");
 const yup = __importStar(require("yup"));
 require("./NewJob.css");
-const Skills_1 = __importDefault(require("./Skills"));
 const graphql_1 = require("../../generated/graphql");
+const SkillTest_1 = __importDefault(require("./SkillTest"));
 const OPTIONS = [
     { label: "Select", value: "select" },
     { label: "tehran", value: "tehran" },
@@ -115,7 +115,7 @@ function NewJob() {
                                 react_1.default.createElement(formik_polaris_1.TextField, { label: "Description", name: "description", multiline: 4, autoComplete: "" }),
                                 react_1.default.createElement(formik_polaris_1.Select, { label: "city", name: "city", options: OPTIONS }),
                                 react_1.default.createElement("div", { className: "skills" },
-                                    react_1.default.createElement(Skills_1.default, { label: "Skills", name: "skills" }))))),
+                                    react_1.default.createElement(SkillTest_1.default, { label: "Skills", name: "skills" }))))),
                     react_1.default.createElement("br", null),
                     react_1.default.createElement(polaris_1.Card, null,
                         react_1.default.createElement("pre", null, JSON.stringify(values, null, 2))))))))));

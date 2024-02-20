@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import './NewJob.css';
 import Skills from "./Skills";
 import {useCreateJobMutation} from "../../generated/graphql";
+import SkillTest from './SkillTest';
 
 const OPTIONS:{ label: string; value: string }[] = [
   { label: "Select", value: "select" },
@@ -97,7 +98,8 @@ const initialValues: {
                       message="maryam alipour"
                       discardAction={{
                         onAction: () => {
-                          navigate("/JobList");
+                        
+                          navigate('/JobList');
                         },
                       }}
                       saveAction={{
@@ -113,9 +115,10 @@ const initialValues: {
                 <TextField label="Description" name="description"  multiline={4} autoComplete=""/>
                   <Select label="city" name="city" options={OPTIONS} />
                   <div className="skills">
-                  <Skills  label="Skills" name="skills" />
+                  {/*<Skills  label="Skills" name="skills" />*/}
+                  <SkillTest label="Skills" name="skills"></SkillTest>
                    </div>
-               
+                   
               </FormLayout>
             </Card>
           </Form>

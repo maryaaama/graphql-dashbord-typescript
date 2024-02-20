@@ -1,27 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __rest = (this && this.__rest) || function (s, e) {
     var t = {};
     for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
@@ -33,19 +10,22 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const react_1 = __importDefault(require("react"));
 const formik_1 = require("formik");
-const react_1 = __importStar(require("react"));
 const polaris_1 = require("@shopify/polaris");
+const react_2 = require("react");
 const graphql_1 = require("../../generated/graphql");
-const Skills = (_a) => {
+function SkillTest(_a) {
     var { label, initialSelectedSkills } = _a, props = __rest(_a, ["label", "initialSelectedSkills"]);
     const { setFieldValue, setFieldError } = (0, formik_1.useFormikContext)();
     const [field, meta] = (0, formik_1.useField)(props);
-    const [selectedTags, setSelectedTags] = (0, react_1.useState)(['frontend']);
-    const [value, setValue] = (0, react_1.useState)('');
-    const [valueData, setValueData] = (0, react_1.useState)([]);
-    const [suggestion, setSuggestion] = (0, react_1.useState)('');
+    const [selectedTags, setSelectedTags] = (0, react_2.useState)(['frountend']);
+    const [value, setValue] = (0, react_2.useState)('');
+    const [suggestion, setSuggestion] = (0, react_2.useState)('');
     const { data, refetch } = (0, graphql_1.useSkillsQuery)({
         variables: {
             title: value,
@@ -55,19 +35,11 @@ const Skills = (_a) => {
         nextFetchPolicy: "cache-first",
     });
     const name = props.name;
-    const handleBlur = (0, react_1.useCallback)(() => {
-        field.onBlur({ target: { name } });
-    }, [field, name]);
-    const handleFocus = (0, react_1.useCallback)(() => {
-        setFieldError(name, "");
-    }, [name, setFieldError]);
-    const error = (0, react_1.useMemo)(() => {
-        if (meta.error && meta.touched) {
-            return meta.error;
-        }
-        return undefined;
-    }, [meta.error, meta.touched]);
-    const handleActiveOptionChange = (0, react_1.useCallback)((activeOption) => {
+    const handleSelectChange = (0, react_2.useCallback)((value) => {
+        setFieldValue(name, value);
+        console.log(value);
+    }, [name, setFieldValue]);
+    const handleActiveOptionChange = (0, react_2.useCallback)((activeOption) => {
         const activeOptionIsAction = activeOption === value;
         if (!activeOptionIsAction && !selectedTags.includes(activeOption)) {
             setSuggestion(activeOption);
@@ -76,11 +48,7 @@ const Skills = (_a) => {
             setSuggestion('');
         }
     }, [value, selectedTags]);
-    const handleSelectChange = (0, react_1.useCallback)((value) => {
-        setFieldValue(name, value);
-        console.log(value);
-    }, [name, setFieldValue]);
-    const updateSelection = (0, react_1.useCallback)((selected) => {
+    const updateSelection = (0, react_2.useCallback)((selected) => {
         const nextSelectedTags = new Set([...selectedTags]);
         if (nextSelectedTags.has(selected)) {
             nextSelectedTags.delete(selected);
@@ -91,28 +59,40 @@ const Skills = (_a) => {
         setSelectedTags([...nextSelectedTags]);
         setValue('');
         setSuggestion('');
+        handleSelectChange([...nextSelectedTags]);
     }, [selectedTags]);
-    const removeTag = (0, react_1.useCallback)((tag) => () => {
+    const removeTag = (0, react_2.useCallback)((tag) => () => {
         updateSelection(tag);
     }, [updateSelection]);
-    const getAllTags = (0, react_1.useCallback)(() => {
+    const getAllTags = (0, react_2.useCallback)(() => {
         var _a;
         let savedTags = [];
         if ((_a = data === null || data === void 0 ? void 0 : data.skills) === null || _a === void 0 ? void 0 : _a.skills) {
             savedTags = data.skills.skills.map((saveData) => saveData.title);
         }
         else {
-            console.log(error);
+            console.log("error");
         }
         const allTags = [...new Set([...savedTags, ...selectedTags].sort())];
-        setValueData(allTags);
         return allTags;
-    }, [data === null || data === void 0 ? void 0 : data.skills, selectedTags, setValueData, error]);
-    const escapeSpecialRegExCharacters = (0, react_1.useCallback)((value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), []);
-    const options = (0, react_1.useMemo)(() => {
+    }, [data === null || data === void 0 ? void 0 : data.skills, selectedTags]);
+    const formatOptionText = (0, react_2.useCallback)((option) => {
+        const trimValue = value.trim().toLocaleLowerCase();
+        const matchIndex = option.toLocaleLowerCase().indexOf(trimValue);
+        if (!value || matchIndex === -1)
+            return option;
+        const start = option.slice(0, matchIndex);
+        const highlight = option.slice(matchIndex, matchIndex + trimValue.length);
+        const end = option.slice(matchIndex + trimValue.length, option.length);
+        return (react_1.default.createElement("p", null,
+            start,
+            react_1.default.createElement(polaris_1.Text, { fontWeight: "bold", as: "span" }, highlight),
+            end));
+    }, [value]);
+    const escapeSpecialRegExCharacters = (0, react_2.useCallback)((value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), []);
+    const options = (0, react_2.useMemo)(() => {
         let list;
         const allTags = getAllTags();
-        console.log('allTags', allTags);
         const filterRegex = new RegExp(escapeSpecialRegExCharacters(value), 'i');
         if (value) {
             list = allTags.filter((tag) => tag.match(filterRegex));
@@ -126,7 +106,7 @@ const Skills = (_a) => {
     const optionMarkup = options.length > 0
         ? options.map((option) => {
             return (react_1.default.createElement(polaris_1.Listbox.Option, { key: option, value: option, selected: selectedTags.includes(option), accessibilityLabel: option },
-                react_1.default.createElement(polaris_1.Listbox.TextOption, { selected: selectedTags.includes(option) }, option)));
+                react_1.default.createElement(polaris_1.Listbox.TextOption, { selected: selectedTags.includes(option) }, formatOptionText(option))));
         })
         : null;
     const noResults = value && !getAllTags().includes(value);
@@ -135,8 +115,7 @@ const Skills = (_a) => {
     const listboxMarkup = optionMarkup || actionMarkup || emptyStateMarkup ? (react_1.default.createElement(polaris_1.Listbox, { autoSelection: polaris_1.AutoSelection.None, onSelect: updateSelection, onActiveOptionChange: handleActiveOptionChange },
         actionMarkup,
         optionMarkup)) : null;
-    return (react_1.default.createElement("div", null,
-        react_1.default.createElement("label", { htmlFor: props.id || name }, label),
-        react_1.default.createElement(polaris_1.Combobox, { allowMultiple: true, activator: react_1.default.createElement(polaris_1.Combobox.TextField, { autoComplete: "off", label: label, labelHidden: true, value: value, suggestion: suggestion, placeholder: "Search tags", verticalContent: verticalContentMarkup, onChange: setValue, error: error ? "required !" : false, onBlur: handleBlur, onFocus: handleFocus }) }, listboxMarkup)));
-};
-exports.default = Skills;
+    return (react_1.default.createElement("div", { style: { height: '225px' } },
+        react_1.default.createElement(polaris_1.Combobox, { allowMultiple: true, activator: react_1.default.createElement(polaris_1.Combobox.TextField, { autoComplete: "off", label: label, labelHidden: true, value: value, suggestion: suggestion, placeholder: "Search tags", verticalContent: verticalContentMarkup, onChange: setValue }) }, listboxMarkup)));
+}
+exports.default = SkillTest;

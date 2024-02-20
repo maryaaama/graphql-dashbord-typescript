@@ -6,9 +6,7 @@ import { Card, Page, FormLayout ,ContextualSaveBar,Frame} from "@shopify/polaris
 import {TextField,Select} from "@satel/formik-polaris";
 import * as yup from 'yup';
 import './NewJob.css';
-import Skills from './Skills';
-import {UPDATE_JOB } from "../../Graphql/Mutations";
-import {JOB} from "../../Graphql/Queries";
+import SkillTest from './SkillTest';
 import {useJobQuery,useUpdateJobMutation} from "../../generated/graphql";
 
 const cityOptions:{ label: string; value: string }[] = [
@@ -31,10 +29,12 @@ const validationSchemaForm = yup.object({
   skills: yup.array().min(1).required("required !"),
 });
 export default function EditJob() {
+
   const navigate=useNavigate();
-  let params=useParams();
-  const itemID = parseInt(params.id || "", 10);
-  console.log('params',itemID)
+  let params=useParams<any>();
+  console.log('params',params)
+  const itemID = Number(params.id);
+  console.log('itemID',itemID)
   const [updateJob,error] = useUpdateJobMutation();
  
   const { data ,loading ,error: queryError} = useJobQuery( {
@@ -47,21 +47,11 @@ export default function EditJob() {
   const value:any = data?.job?.job;
 console.log('value.title', value?.title);
 
-/*let formSkills = [];
-if (value && value.skills) {
-  formSkills = value.skills.map((skill) => skill.title.replace("_", " "));
-  const formSkills = value?.skills?.map((skill:string[]) => skill.title.toLowerCase()) || [];
-console.log('formSkills', formSkills);
-}*/
-
-
-//const formSkills = (value?.skills || []).map((skill: { title: string }) => skill.title.toLowerCase());
-//console.log('formSkills', formSkills);
 const formSkills = (value?.skills || []).map((skill: { title: string } | null) => {
   if (skill && typeof skill.title === 'string') {
     return skill.title.toLowerCase();
   } else {
-    return ''; // Handle the case when skill is null or undefined, or title is not a string
+    return ''; 
   }
 });
 
@@ -145,7 +135,7 @@ const initialValuesForm = {
                       <TextField label="Description" name="description" multiline={4} autoComplete=""/>
                       <Select label="city" name="city" options={cityOptions} />
                       <div className="skills">
-                      <Skills label="Skills" name="skills" initialSelectedSkills={formSkills} />
+                      <SkillTest label="Skills" name="skills" initialSelectedSkills={formSkills} />
                       </div>
                     </FormLayout>
                   </Card>

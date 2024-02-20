@@ -1,5 +1,4 @@
 import React, { useCallback, useState} from 'react';
-import { useMutation } from '@apollo/client';
 import { useNavigate } from 'react-router-dom';
 import {
   BlockStack,
@@ -16,9 +15,10 @@ import {useDeleteJobMutation} from "../../generated/graphql";
 
 export default function Job( value:any) {
 console.log('Jobvalue',value)
-console.log('Jobvalue.title',value.title)
+console.log('Jobvalue.title',value.value.id)
+console.log(typeof(value.value));
   const navigate = useNavigate();
-  const[jobId,setJobId]=useState<number>(value.id);
+  const[jobId,setJobId]=useState<number>(value.value.id);
   const [deleteJob]=useDeleteJobMutation();
   const [activeModal, setActiveModal] = useState(false);
 
@@ -36,7 +36,8 @@ console.log('Jobvalue.title',value.title)
         },
       });
       if (data?.deleteJob?.status) {
-        navigate("/JobList");
+        navigate("/");
+        navigate("/JobList")
       }
     } catch (err) {
       console.error(err);
@@ -69,7 +70,7 @@ console.log('Jobvalue.title',value.title)
                 <Button
                  variant="primary"
                  tone="critical"
-                 onClick={() => handleDeleteAction(value.id)}
+                 onClick={() => handleDeleteAction(jobId)}
                  accessibilityLabel="Delete"
                   >
                  Delete
@@ -104,7 +105,7 @@ console.log('Jobvalue.title',value.title)
            )}
                   <Button
                     variant="primary"
-                    onClick={() => { navigate(`./Job/${value.id}`)}}
+                    onClick={() => { navigate(`./Job/${jobId}`)}}
                     accessibilityLabel="Edit"
                   >
                     Edit
@@ -112,7 +113,7 @@ console.log('Jobvalue.title',value.title)
                 </ButtonGroup>
               </InlineGrid>
               <Text as="p" variant="bodyMd">
-                {value.city}
+                {value.value.city}
               </Text>
             </BlockStack>
           </BlockStack>
