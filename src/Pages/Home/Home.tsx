@@ -12,9 +12,9 @@ export default function Home() {
           <Link to='/Register'>
             <Navigation.Section
               items={[
-                { 
+                {
                   label: 'Register',
-                  
+
                 },
               ]}
             />

@@ -20,8 +20,6 @@ const cityOptions:{ label: string; value: string }[] = [
   { label: "zanjan", value: "zanjan" },
   { label: "boshehr", value: "boshehr" },
 ];
-
-
 const validationSchemaForm = yup.object({
   title: yup.string().required('Title is required'),
   description: yup.string().required('description is required'),

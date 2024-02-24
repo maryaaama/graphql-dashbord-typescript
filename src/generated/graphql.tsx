@@ -336,9 +336,9 @@ export type LoginMutationFn = Apollo.MutationFunction<LoginMutation, LoginMutati
  * });
  */
 export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<LoginMutation, LoginMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, options);
+}
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
@@ -371,9 +371,9 @@ export type CreateUserMutationFn = Apollo.MutationFunction<CreateUserMutation, C
  * });
  */
 export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<CreateUserMutation, CreateUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<CreateUserMutation, CreateUserMutationVariables>(CreateUserDocument, options);
+}
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
@@ -405,9 +405,9 @@ export type DeleteJobMutationFn = Apollo.MutationFunction<DeleteJobMutation, Del
  * });
  */
 export function useDeleteJobMutation(baseOptions?: Apollo.MutationHookOptions<DeleteJobMutation, DeleteJobMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<DeleteJobMutation, DeleteJobMutationVariables>(DeleteJobDocument, options);
+}
 export type DeleteJobMutationHookResult = ReturnType<typeof useDeleteJobMutation>;
 export type DeleteJobMutationResult = Apollo.MutationResult<DeleteJobMutation>;
 export type DeleteJobMutationOptions = Apollo.BaseMutationOptions<DeleteJobMutation, DeleteJobMutationVariables>;
@@ -456,9 +456,9 @@ export type CreateJobMutationFn = Apollo.MutationFunction<CreateJobMutation, Cre
  * });
  */
 export function useCreateJobMutation(baseOptions?: Apollo.MutationHookOptions<CreateJobMutation, CreateJobMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateJobMutation, CreateJobMutationVariables>(CreateJobDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<CreateJobMutation, CreateJobMutationVariables>(CreateJobDocument, options);
+}
 export type CreateJobMutationHookResult = ReturnType<typeof useCreateJobMutation>;
 export type CreateJobMutationResult = Apollo.MutationResult<CreateJobMutation>;
 export type CreateJobMutationOptions = Apollo.BaseMutationOptions<CreateJobMutation, CreateJobMutationVariables>;
@@ -499,9 +499,9 @@ export type UpdateJobMutationFn = Apollo.MutationFunction<UpdateJobMutation, Upd
  * });
  */
 export function useUpdateJobMutation(baseOptions?: Apollo.MutationHookOptions<UpdateJobMutation, UpdateJobMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<UpdateJobMutation, UpdateJobMutationVariables>(UpdateJobDocument, options);
+}
 export type UpdateJobMutationHookResult = ReturnType<typeof useUpdateJobMutation>;
 export type UpdateJobMutationResult = Apollo.MutationResult<UpdateJobMutation>;
 export type UpdateJobMutationOptions = Apollo.BaseMutationOptions<UpdateJobMutation, UpdateJobMutationVariables>;
@@ -530,17 +530,17 @@ export const ShowtokensDocument = gql`
  * });
  */
 export function useShowtokensQuery(baseOptions?: Apollo.QueryHookOptions<ShowtokensQuery, ShowtokensQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ShowtokensQuery, ShowtokensQueryVariables>(ShowtokensDocument, options);
-      }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<ShowtokensQuery, ShowtokensQueryVariables>(ShowtokensDocument, options);
+}
 export function useShowtokensLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ShowtokensQuery, ShowtokensQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ShowtokensQuery, ShowtokensQueryVariables>(ShowtokensDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<ShowtokensQuery, ShowtokensQueryVariables>(ShowtokensDocument, options);
+}
 export function useShowtokensSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<ShowtokensQuery, ShowtokensQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<ShowtokensQuery, ShowtokensQueryVariables>(ShowtokensDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<ShowtokensQuery, ShowtokensQueryVariables>(ShowtokensDocument, options);
+}
 export type ShowtokensQueryHookResult = ReturnType<typeof useShowtokensQuery>;
 export type ShowtokensLazyQueryHookResult = ReturnType<typeof useShowtokensLazyQuery>;
 export type ShowtokensSuspenseQueryHookResult = ReturnType<typeof useShowtokensSuspenseQuery>;
@@ -583,18 +583,18 @@ export const JobsDocument = gql`
  *   },
  * });
  */
-export function useJobsQuery(baseOptions: Apollo.QueryHookOptions<JobsQuery, JobsQueryVariables> & ({ variables: JobsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<JobsQuery, JobsQueryVariables>(JobsDocument, options);
-      }
+export function useJobsQuery(baseOptions: Apollo.QueryHookOptions<JobsQuery, JobsQueryVariables> & ({ variables: JobsQueryVariables; skip?: boolean; } | { skip: boolean; })) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<JobsQuery, JobsQueryVariables>(JobsDocument, options);
+}
 export function useJobsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<JobsQuery, JobsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<JobsQuery, JobsQueryVariables>(JobsDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<JobsQuery, JobsQueryVariables>(JobsDocument, options);
+}
 export function useJobsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<JobsQuery, JobsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<JobsQuery, JobsQueryVariables>(JobsDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<JobsQuery, JobsQueryVariables>(JobsDocument, options);
+}
 export type JobsQueryHookResult = ReturnType<typeof useJobsQuery>;
 export type JobsLazyQueryHookResult = ReturnType<typeof useJobsLazyQuery>;
 export type JobsSuspenseQueryHookResult = ReturnType<typeof useJobsSuspenseQuery>;
@@ -636,18 +636,18 @@ export const SearchJobDocument = gql`
  *   },
  * });
  */
-export function useSearchJobQuery(baseOptions: Apollo.QueryHookOptions<SearchJobQuery, SearchJobQueryVariables> & ({ variables: SearchJobQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SearchJobQuery, SearchJobQueryVariables>(SearchJobDocument, options);
-      }
+export function useSearchJobQuery(baseOptions: Apollo.QueryHookOptions<SearchJobQuery, SearchJobQueryVariables> & ({ variables: SearchJobQueryVariables; skip?: boolean; } | { skip: boolean; })) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<SearchJobQuery, SearchJobQueryVariables>(SearchJobDocument, options);
+}
 export function useSearchJobLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchJobQuery, SearchJobQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SearchJobQuery, SearchJobQueryVariables>(SearchJobDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<SearchJobQuery, SearchJobQueryVariables>(SearchJobDocument, options);
+}
 export function useSearchJobSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SearchJobQuery, SearchJobQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<SearchJobQuery, SearchJobQueryVariables>(SearchJobDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<SearchJobQuery, SearchJobQueryVariables>(SearchJobDocument, options);
+}
 export type SearchJobQueryHookResult = ReturnType<typeof useSearchJobQuery>;
 export type SearchJobLazyQueryHookResult = ReturnType<typeof useSearchJobLazyQuery>;
 export type SearchJobSuspenseQueryHookResult = ReturnType<typeof useSearchJobSuspenseQuery>;
@@ -682,18 +682,18 @@ export const SkillsDocument = gql`
  *   },
  * });
  */
-export function useSkillsQuery(baseOptions: Apollo.QueryHookOptions<SkillsQuery, SkillsQueryVariables> & ({ variables: SkillsQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SkillsQuery, SkillsQueryVariables>(SkillsDocument, options);
-      }
+export function useSkillsQuery(baseOptions: Apollo.QueryHookOptions<SkillsQuery, SkillsQueryVariables> & ({ variables: SkillsQueryVariables; skip?: boolean; } | { skip: boolean; })) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<SkillsQuery, SkillsQueryVariables>(SkillsDocument, options);
+}
 export function useSkillsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SkillsQuery, SkillsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SkillsQuery, SkillsQueryVariables>(SkillsDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<SkillsQuery, SkillsQueryVariables>(SkillsDocument, options);
+}
 export function useSkillsSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<SkillsQuery, SkillsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<SkillsQuery, SkillsQueryVariables>(SkillsDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<SkillsQuery, SkillsQueryVariables>(SkillsDocument, options);
+}
 export type SkillsQueryHookResult = ReturnType<typeof useSkillsQuery>;
 export type SkillsLazyQueryHookResult = ReturnType<typeof useSkillsLazyQuery>;
 export type SkillsSuspenseQueryHookResult = ReturnType<typeof useSkillsSuspenseQuery>;
@@ -731,18 +731,18 @@ export const JobDocument = gql`
  *   },
  * });
  */
-export function useJobQuery(baseOptions: Apollo.QueryHookOptions<JobQuery, JobQueryVariables> & ({ variables: JobQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<JobQuery, JobQueryVariables>(JobDocument, options);
-      }
+export function useJobQuery(baseOptions: Apollo.QueryHookOptions<JobQuery, JobQueryVariables> & ({ variables: JobQueryVariables; skip?: boolean; } | { skip: boolean; })) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<JobQuery, JobQueryVariables>(JobDocument, options);
+}
 export function useJobLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<JobQuery, JobQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<JobQuery, JobQueryVariables>(JobDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<JobQuery, JobQueryVariables>(JobDocument, options);
+}
 export function useJobSuspenseQuery(baseOptions?: Apollo.SuspenseQueryHookOptions<JobQuery, JobQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<JobQuery, JobQueryVariables>(JobDocument, options);
-        }
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useSuspenseQuery<JobQuery, JobQueryVariables>(JobDocument, options);
+}
 export type JobQueryHookResult = ReturnType<typeof useJobQuery>;
 export type JobLazyQueryHookResult = ReturnType<typeof useJobLazyQuery>;
 export type JobSuspenseQueryHookResult = ReturnType<typeof useJobSuspenseQuery>;
